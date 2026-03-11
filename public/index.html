@@ -1,0 +1,329 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>미국 시장 온도계</title>
+    <link rel="stylesheet" href="/styles.css" />
+    <script src="/app.js" defer></script>
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="site-header-inner">
+        <a class="brand" href="/">
+          <span class="brand-mark"></span>
+          <span class="brand-text">market pulse</span>
+        </a>
+
+        <nav class="site-nav" aria-label="주요 메뉴">
+          <a href="#liquidity-section">Liquidity</a>
+          <a href="#fx-section">FX</a>
+          <a href="#options-section">Options</a>
+        </nav>
+
+        <div class="site-actions">
+          <a class="nav-button nav-button-primary" href="#options-section">라이브 보기</a>
+          <a class="nav-button" href="#liquidity-section">분석 보기</a>
+        </div>
+      </div>
+    </header>
+
+    <div class="page-shell">
+      <main class="article-page">
+        <section class="hero-intro">
+          <p class="eyebrow">US MARKET DATA MONITOR</p>
+          <h1>미국 시장 온도계</h1>
+          <p class="lede">
+            연준 총자산에서 역레포와 재무부 현금잔고를 차감한 순유동성을 추적하고,
+            달러/원과 엔/원 흐름, 종목별 최대 미결제약정 콜옵션과 풋옵션을 함께 확인합니다.
+          </p>
+        </section>
+
+        <section class="temperature-banner panel">
+          <div class="temperature-copy">
+            <p class="section-label">Market Thermometer</p>
+            <h2>전체적인 매수 · 매도 타이밍</h2>
+            <p>
+              기준 체온은 <strong>36.5°C</strong> 입니다. 높을수록 과열과 매도 경계, 낮을수록
+              냉각과 매수 탐색 쪽으로 해석합니다.
+            </p>
+          </div>
+
+          <div class="temperature-panel" id="temperature-panel">
+            <div class="temperature-panel-head">
+              <span class="temperature-signal" id="temperature-signal">중립</span>
+              <span class="temperature-mini" id="temperature-updated">기준선 36.5°C</span>
+            </div>
+
+            <div class="temperature-reading">
+              <strong class="temperature-value" id="temperature-value">36.5°C</strong>
+              <span class="temperature-delta" id="temperature-delta">기준선과 동일</span>
+            </div>
+
+            <div class="temperature-meter" id="temperature-meter">
+              <div class="temperature-meter-track">
+                <span class="temperature-baseline">36.5</span>
+                <span class="temperature-marker" id="temperature-marker"></span>
+              </div>
+              <div class="temperature-scale">
+                <span>34.0</span>
+                <span>36.5</span>
+                <span>39.0</span>
+              </div>
+            </div>
+
+            <p class="temperature-description" id="temperature-description">
+              시장 체온을 계산하는 중입니다.
+            </p>
+            <p class="temperature-note" id="temperature-note">
+              순유동성과 환율 데이터를 바탕으로 계산합니다.
+            </p>
+          </div>
+        </section>
+
+        <section class="macro-stack">
+          <section class="panel fed-panel">
+            <div class="panel-head macro-panel-head">
+              <div class="panel-title">
+                <p class="section-label">Fed Calendar</p>
+                <h3>다가오는 FOMC 일정</h3>
+              </div>
+              <p class="macro-status" id="fed-status">Fed 일정을 불러오는 중입니다.</p>
+            </div>
+
+            <div class="fed-calendar" id="fed-calendar">
+              <div class="empty-state">공식 FOMC 일정을 불러오는 중입니다.</div>
+            </div>
+          </section>
+
+          <div class="macro-signal-grid">
+            <section class="panel macro-signal-card">
+              <div class="macro-signal-head">
+                <div>
+                  <p class="section-label">Volatility</p>
+                  <h3>VIX</h3>
+                </div>
+                <span class="macro-badge" id="vix-signal">-</span>
+              </div>
+
+              <div class="macro-reading">
+                <strong class="macro-value" id="vix-value">-</strong>
+                <span class="macro-change" id="vix-change">-</span>
+              </div>
+
+              <svg
+                class="macro-sparkline"
+                id="vix-chart"
+                viewBox="0 0 280 92"
+                role="img"
+                aria-label="VIX 최근 추이"
+              ></svg>
+
+              <p class="macro-description" id="vix-description">VIX를 불러오는 중입니다.</p>
+              <p class="macro-footnote" id="vix-date">-</p>
+            </section>
+
+            <section class="panel macro-signal-card">
+              <div class="macro-signal-head">
+                <div>
+                  <p class="section-label">Sentiment</p>
+                  <h3>공포탐욕지수</h3>
+                </div>
+                <span class="macro-badge" id="fear-greed-label">-</span>
+              </div>
+
+              <div class="macro-reading">
+                <strong class="macro-value" id="fear-greed-value">-</strong>
+                <span class="macro-change" id="fear-greed-change">-</span>
+              </div>
+
+              <div class="sentiment-meter">
+                <div class="sentiment-track">
+                  <span class="sentiment-marker" id="fear-greed-marker"></span>
+                </div>
+                <div class="sentiment-scale">
+                  <span>0</span>
+                  <span>50</span>
+                  <span>100</span>
+                </div>
+              </div>
+
+              <p class="macro-description" id="fear-greed-description">
+                공포탐욕지수를 불러오는 중입니다.
+              </p>
+              <p class="macro-footnote" id="fear-greed-note">-</p>
+            </section>
+          </div>
+        </section>
+
+        <section class="showcase-wrap">
+          <div class="showcase-stage panel">
+            <article class="showcase-card showcase-card-formula">
+              <span class="showcase-label">Formula</span>
+              <strong class="showcase-formula"
+                >Total Assets - (Reverse Repo + Treasury Cash)</strong
+              >
+              <p>순유동성은 연준 총자산에서 역레포와 재무부 현금잔고를 차감한 값입니다.</p>
+            </article>
+
+            <article class="showcase-card showcase-card-primary">
+              <span class="metric-label">순유동성</span>
+              <strong class="metric-value hero-metric" id="metric-net">-</strong>
+              <span class="metric-meta" id="metric-date">-</span>
+            </article>
+
+            <article class="showcase-card showcase-card-asset">
+              <span class="showcase-label">연준 총자산</span>
+              <strong class="showcase-value" id="metric-assets">-</strong>
+            </article>
+
+            <article class="showcase-card showcase-card-tga">
+              <span class="showcase-label">재무부 현금잔고</span>
+              <strong class="showcase-value" id="metric-tga">-</strong>
+            </article>
+
+            <article class="showcase-card showcase-card-rrp">
+              <span class="showcase-label">역레포</span>
+              <strong class="showcase-value" id="metric-rrp">-</strong>
+            </article>
+
+            <article class="showcase-card showcase-card-change">
+              <span class="showcase-label">주간 변화</span>
+              <strong class="showcase-value" id="metric-change">-</strong>
+            </article>
+          </div>
+        </section>
+
+        <section class="article-copy">
+          <p>
+            순유동성은 주간 매크로 환경을 읽는 핵심 지표입니다. 여기에 달러/원과 엔/원의 흐름을 함께 보면
+            글로벌 달러 강세와 한국 자산 가격의 압박을 더 입체적으로 볼 수 있고, 옵션 미결제약정은 시장 참여자들이
+            실제로 어느 가격대에 포지션을 쌓고 있는지 보여줍니다.
+          </p>
+        </section>
+
+        <section class="section-block" id="liquidity-section">
+          <div class="section-copy">
+            <p class="section-label">Net Liquidity</p>
+            <h2>미국 증시 순유동성</h2>
+            <p>
+              FRED 주간 데이터 기준으로 연준 총자산, 재무부 현금잔고, 역레포를 합산해 순유동성을 계산합니다.
+            </p>
+          </div>
+
+          <div class="panel chart-panel">
+            <div class="panel-head">
+              <div class="panel-title">
+                <p class="section-label">Tracking</p>
+                <h3>Liquidity Trend</h3>
+              </div>
+              <div class="range-switch" id="range-switch" role="tablist" aria-label="기간 선택">
+                <button class="range-button" data-range="1Y">1Y</button>
+                <button class="range-button" data-range="3Y">3Y</button>
+                <button class="range-button is-active" data-range="5Y">5Y</button>
+                <button class="range-button" data-range="MAX">MAX</button>
+              </div>
+            </div>
+
+            <div class="chart-shell">
+              <svg
+                id="liquidity-chart"
+                viewBox="0 0 960 360"
+                role="img"
+                aria-label="미국 순유동성 시계열 차트"
+              ></svg>
+              <div class="chart-tooltip is-hidden" id="chart-tooltip"></div>
+            </div>
+
+            <div class="chart-footer">
+              <p class="chart-note" id="chart-note">
+                FRED 주간 데이터 기준. 역레포는 각 주차 직전의 최신 관측치를 사용합니다.
+              </p>
+              <p class="chart-status" id="liquidity-status" aria-live="polite"></p>
+            </div>
+          </div>
+        </section>
+
+        <section class="section-block section-grid">
+          <div class="section-copy" id="fx-section">
+            <p class="section-label">FX Monitor</p>
+            <h2>달러/원 · 엔/원</h2>
+            <p>원화 기준 환율 변화와 최근 흐름을 한 번에 볼 수 있도록 정리했습니다.</p>
+          </div>
+
+          <div class="section-copy" id="options-section">
+            <p class="section-label">Largest Open Interest</p>
+            <h2>옵션 물량 탐색</h2>
+            <p>미국 주식이나 ETF를 검색하면 가장 큰 미결제약정 콜옵션과 풋옵션을 보여줍니다.</p>
+          </div>
+
+          <section class="panel fx-panel">
+            <div class="fx-grid">
+              <article class="fx-card fx-card-usd">
+                <div class="fx-card-head">
+                  <span class="fx-tag">USD/KRW</span>
+                  <span class="fx-date" id="fx-usd-date">-</span>
+                </div>
+                <strong class="fx-value" id="fx-usd-value">-</strong>
+                <span class="fx-change" id="fx-usd-change">-</span>
+                <svg
+                  class="fx-sparkline"
+                  id="fx-usd-chart"
+                  viewBox="0 0 280 92"
+                  role="img"
+                  aria-label="달러/원 최근 추이"
+                ></svg>
+              </article>
+
+              <article class="fx-card fx-card-jpy">
+                <div class="fx-card-head">
+                  <span class="fx-tag">100 JPY/KRW</span>
+                  <span class="fx-date" id="fx-jpy-date">-</span>
+                </div>
+                <strong class="fx-value" id="fx-jpy-value">-</strong>
+                <span class="fx-change" id="fx-jpy-change">-</span>
+                <svg
+                  class="fx-sparkline"
+                  id="fx-jpy-chart"
+                  viewBox="0 0 280 92"
+                  role="img"
+                  aria-label="엔/원 최근 추이"
+                ></svg>
+              </article>
+            </div>
+
+            <p class="fx-note" id="fx-note">
+              달러/원과 엔/원 시계열을 불러오는 중입니다.
+            </p>
+          </section>
+
+          <section class="panel options-panel">
+            <form id="symbol-form" class="search-form" autocomplete="off">
+              <label for="symbol-input" class="search-label">미국 주식 또는 ETF 검색</label>
+              <div class="search-row">
+                <input
+                  id="symbol-input"
+                  name="symbol"
+                  type="search"
+                  placeholder="예: AAPL, NVDA, SPY, Tesla"
+                  spellcheck="false"
+                />
+                <button type="submit">조회</button>
+              </div>
+              <div class="search-results" id="search-results" role="listbox"></div>
+            </form>
+
+            <div class="options-status" id="options-status" aria-live="polite">
+              기본값으로 AAPL 옵션 체인을 불러옵니다.
+            </div>
+            <div class="options-output" id="options-output">
+              <div class="empty-state">
+                종목을 검색하면 가장 큰 콜옵션과 풋옵션 미결제약정을 보여줍니다.
+              </div>
+            </div>
+          </section>
+        </section>
+      </main>
+    </div>
+  </body>
+</html>

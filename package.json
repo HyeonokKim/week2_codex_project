@@ -1,0 +1,9 @@
+{
+  "name": "us-market-liquidity-dashboard",
+  "version": "1.0.0",
+  "private": true,
+  "description": "US net liquidity and options positioning dashboard",
+  "scripts": {
+    "start": "node server.js"
+  }
+}
