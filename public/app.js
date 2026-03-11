@@ -15,6 +15,7 @@ const state = {
   optionsRequestToken: 0,
   refreshTimers: {
     liquidity: null,
+    marketStatus: null,
     options: null,
   },
   searchTimer: null,
@@ -58,6 +59,7 @@ const elements = {
   nasdaqDate: document.getElementById("nasdaq-date"),
   nasdaqValue: document.getElementById("nasdaq-value"),
   liquidityStatus: document.getElementById("liquidity-status"),
+  marketSession: document.getElementById("market-session"),
   metricAssets: document.getElementById("metric-assets"),
   metricChange: document.getElementById("metric-change"),
   metricDate: document.getElementById("metric-date"),
@@ -99,9 +101,13 @@ const RANGE_TO_YEARS = {
 
 const AUTO_REFRESH_MS = {
   liquidity: 5 * 60 * 1000,
+  marketStatus: 60 * 1000,
   options: 30 * 1000,
 };
 
+const MARKET_TIME_ZONE = "America/New_York";
+const MARKET_OPEN_MINUTES = 9 * 60 + 30;
+const MARKET_CLOSE_MINUTES = 16 * 60;
 const BACK_TO_TOP_THRESHOLD = 480;
 
 function escapeHtml(value) {
@@ -111,6 +117,77 @@ function escapeHtml(value) {
     .replaceAll(">", "&gt;")
     .replaceAll('"', "&quot;")
     .replaceAll("'", "&#39;");
+}
+
+function getEasternTimeNow() {
+  return new Date(
+    new Date().toLocaleString("en-US", {
+      timeZone: MARKET_TIME_ZONE,
+    })
+  );
+}
+
+function isMarketWeekday(day) {
+  return day >= 1 && day <= 5;
+}
+
+function getNextMarketOpen(easternNow) {
+  const nextOpen = new Date(easternNow);
+  nextOpen.setSeconds(0, 0);
+
+  const day = easternNow.getDay();
+  const minutesNow = easternNow.getHours() * 60 + easternNow.getMinutes();
+
+  if (isMarketWeekday(day) && minutesNow < MARKET_OPEN_MINUTES) {
+    nextOpen.setHours(9, 30, 0, 0);
+    return nextOpen;
+  }
+
+  nextOpen.setDate(nextOpen.getDate() + 1);
+  nextOpen.setHours(9, 30, 0, 0);
+
+  while (!isMarketWeekday(nextOpen.getDay())) {
+    nextOpen.setDate(nextOpen.getDate() + 1);
+  }
+
+  return nextOpen;
+}
+
+function formatCountdown(msRemaining) {
+  const totalMinutes = Math.max(0, Math.ceil(msRemaining / 60000));
+  const hours = Math.floor(totalMinutes / 60);
+  const minutes = totalMinutes % 60;
+
+  return `${hours}시간 ${minutes}분`;
+}
+
+function renderMarketSession() {
+  if (!elements.marketSession) {
+    return;
+  }
+
+  const easternNow = getEasternTimeNow();
+  const day = easternNow.getDay();
+  const minutesNow = easternNow.getHours() * 60 + easternNow.getMinutes();
+  const isOpen =
+    isMarketWeekday(day) &&
+    minutesNow >= MARKET_OPEN_MINUTES &&
+    minutesNow < MARKET_CLOSE_MINUTES;
+
+  if (isOpen) {
+    elements.marketSession.innerHTML =
+      '<span class="market-session-line">현재 시장상태 : ON</span>';
+    elements.marketSession.className = "market-session is-open";
+    return;
+  }
+
+  const nextOpen = getNextMarketOpen(easternNow);
+  const countdown = formatCountdown(nextOpen.getTime() - easternNow.getTime());
+
+  elements.marketSession.innerHTML =
+    '<span class="market-session-line">현재 시장상태 : OFF</span>' +
+    `<span class="market-session-countdown">다음 장 시작까지 ${escapeHtml(countdown)}</span>`;
+  elements.marketSession.className = "market-session is-closed";
 }
 
 async function fetchJson(url) {
@@ -1174,11 +1251,20 @@ function setupAutoRefresh() {
     loadOptions(state.selectedSymbol, { silent: true });
   }, AUTO_REFRESH_MS.options);
 
+  state.refreshTimers.marketStatus = window.setInterval(() => {
+    if (document.hidden) {
+      return;
+    }
+
+    renderMarketSession();
+  }, AUTO_REFRESH_MS.marketStatus);
+
   document.addEventListener("visibilitychange", () => {
     if (document.hidden) {
       return;
     }
 
+    renderMarketSession();
     loadNetLiquidity({ silent: true });
 
     if (state.selectedSymbol) {
@@ -1189,6 +1275,7 @@ function setupAutoRefresh() {
 
 async function init() {
   bindEvents();
+  renderMarketSession();
   updateBackToTopButton();
   setupAutoRefresh();
   await loadNetLiquidity();
