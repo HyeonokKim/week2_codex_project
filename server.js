@@ -3,7 +3,7 @@ const fs = require("node:fs/promises");
 const path = require("node:path");
 const { URL } = require("node:url");
 
-const PORT = Number(process.env.PORT || 3000);
+const PORT = Number(process.env.PORT || 3210);
 const PUBLIC_DIR = path.join(__dirname, "public");
 
 const FRED_SERIES = {

@@ -20,7 +20,7 @@ npm install
 npm start
 ```
 
-기본 주소는 `http://localhost:3000` 입니다.
+기본 주소는 `http://localhost:3210` 입니다.
 
 ## Data Sources
 
