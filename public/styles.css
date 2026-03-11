@@ -460,8 +460,15 @@ a {
 
 .fed-calendar {
   display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(220px, 1fr);
   gap: 12px;
   margin-top: 20px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding-bottom: 8px;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x proximity;
 }
 
 .fed-item {
@@ -473,6 +480,8 @@ a {
   border: 1px solid var(--line);
   border-radius: 22px;
   background: var(--surface-soft);
+  min-width: 220px;
+  scroll-snap-align: start;
 }
 
 .fed-item-badge,
