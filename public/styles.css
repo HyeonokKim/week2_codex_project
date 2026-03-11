@@ -293,18 +293,6 @@ a {
     radial-gradient(circle at top right, rgba(49, 130, 246, 0.08), transparent 32%);
 }
 
-.overview-grid {
-  display: grid;
-  grid-template-columns: minmax(0, 1.06fr) minmax(0, 0.94fr);
-  gap: 14px;
-  align-items: start;
-  margin-top: 20px;
-}
-
-.overview-grid > .temperature-banner {
-  margin-top: 0;
-}
-
 .temperature-panel {
   --thermo-color: #9aa4af;
   --thermo-position: 50%;
@@ -457,7 +445,7 @@ a {
 .macro-stack {
   display: grid;
   gap: 14px;
-  margin-top: 0;
+  margin-top: 14px;
 }
 
 .macro-panel-head {
@@ -1314,7 +1302,7 @@ a {
     width: min(calc(100vw - 24px), 1320px);
   }
 
-  .overview-grid {
+  .temperature-banner {
     grid-template-columns: 1fr;
   }
 
@@ -1362,11 +1350,14 @@ a {
     width: 100%;
   }
 
-  .overview-grid,
   .temperature-banner,
   .temperature-reading,
   .temperature-panel-head {
     align-items: flex-start;
+  }
+
+  .temperature-banner {
+    grid-template-columns: 1fr;
   }
 
   .temperature-reading,
