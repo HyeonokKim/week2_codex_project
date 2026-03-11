@@ -2,6 +2,7 @@ const state = {
   activeRange: "5Y",
   fedSchedule: null,
   fearGreed: null,
+  fedFunds: null,
   isLoadingLiquidity: false,
   isLoadingOptions: false,
   fx: null,
@@ -34,6 +35,13 @@ const elements = {
   fearGreedMarker: document.getElementById("fear-greed-marker"),
   fearGreedNote: document.getElementById("fear-greed-note"),
   fearGreedValue: document.getElementById("fear-greed-value"),
+  fedFundsChange: document.getElementById("fed-funds-change"),
+  fedFundsChart: document.getElementById("fed-funds-chart"),
+  fedFundsDate: document.getElementById("fed-funds-date"),
+  fedFundsDescription: document.getElementById("fed-funds-description"),
+  fedFundsNote: document.getElementById("fed-funds-note"),
+  fedFundsSignal: document.getElementById("fed-funds-signal"),
+  fedFundsValue: document.getElementById("fed-funds-value"),
   fxJpyChange: document.getElementById("fx-jpy-change"),
   fxJpyChart: document.getElementById("fx-jpy-chart"),
   fxJpyDate: document.getElementById("fx-jpy-date"),
@@ -487,6 +495,35 @@ function renderVix(vix) {
   renderSparkline(elements.vixChart, vix.points, "vix");
 }
 
+function renderFedFunds(fedFunds) {
+  state.fedFunds = fedFunds;
+
+  if (!fedFunds) {
+    elements.fedFundsValue.textContent = "-";
+    elements.fedFundsSignal.textContent = "-";
+    elements.fedFundsChange.textContent = "-";
+    elements.fedFundsDate.textContent = "-";
+    elements.fedFundsDescription.textContent = "연방기금금리를 불러오지 못했습니다.";
+    elements.fedFundsNote.textContent = "-";
+    elements.fedFundsChart.innerHTML = "";
+    return;
+  }
+
+  elements.fedFundsValue.textContent = `${formatNumber(fedFunds.latest, 2)}%`;
+  elements.fedFundsSignal.textContent = fedFunds.signal;
+  elements.fedFundsSignal.classList.toggle("is-caution", fedFunds.latest >= 4);
+  elements.fedFundsChange.textContent = `전일 대비 ${formatPlainChange(fedFunds.dailyChange, 2)}%p`;
+  elements.fedFundsChange.classList.toggle("is-up", fedFunds.dailyChange > 0);
+  elements.fedFundsChange.classList.toggle("is-down", fedFunds.dailyChange < 0);
+  elements.fedFundsDate.textContent = `${formatDate(fedFunds.latestDate, {
+    month: "short",
+    day: "numeric",
+  })} · ${fedFunds.source}`;
+  elements.fedFundsDescription.textContent = fedFunds.description;
+  elements.fedFundsNote.textContent = fedFunds.nextMeetingNote;
+  renderSparkline(elements.fedFundsChart, fedFunds.points, "fedfunds");
+}
+
 function renderFearGreed(fearGreed) {
   state.fearGreed = fearGreed;
 
@@ -886,12 +923,14 @@ async function loadNetLiquidity({ silent = false } = {}) {
     state.fx = payload.fx;
     state.fedSchedule = payload.fedSchedule;
     state.fearGreed = payload.fearGreed;
+    state.fedFunds = payload.fedFunds;
     state.marketTemperature = payload.marketTemperature;
     state.vix = payload.vix;
     state.lastLiquidityCheckAt = new Date();
     renderMetrics(payload.summary);
     renderMarketTemperature(payload.marketTemperature);
     renderFedSchedule(payload.fedSchedule);
+    renderFedFunds(payload.fedFunds);
     renderVix(payload.vix);
     renderFearGreed(payload.fearGreed);
     renderFx(payload.fx);

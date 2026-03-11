@@ -928,6 +928,11 @@ a {
   color: var(--teal);
 }
 
+.fx-tag-rate {
+  background: rgba(90, 98, 255, 0.1);
+  color: #4d5bff;
+}
+
 .put-card .option-tag {
   background: var(--red-soft);
   color: var(--red);
@@ -989,6 +994,35 @@ a {
 
 .fx-fill-vix {
   fill: rgba(240, 108, 0, 0.12);
+}
+
+.fx-line-fedfunds {
+  stroke: #4d5bff;
+}
+
+.fx-fill-fedfunds {
+  fill: rgba(77, 91, 255, 0.12);
+}
+
+.rates-panel {
+  padding: 18px;
+}
+
+.rates-card {
+  padding: 22px;
+}
+
+.rates-signal-head {
+  align-items: center;
+  margin-top: 12px;
+}
+
+.rates-value {
+  margin-top: 0;
+}
+
+.rates-note {
+  margin-top: 10px;
 }
 
 .search-form {
