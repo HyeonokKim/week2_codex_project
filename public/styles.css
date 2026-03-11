@@ -148,21 +148,36 @@ a {
   gap: 12px;
 }
 
-.nav-button {
+.market-session {
   display: inline-flex;
   align-items: center;
-  justify-content: center;
+  gap: 8px;
   min-height: 48px;
+  margin: 0;
   padding: 0 18px;
   border-radius: 16px;
   background: #f2f4f6;
   color: #4e5968;
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 0.84rem;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.market-session-status {
   font-weight: 700;
 }
 
-.nav-button-primary {
-  background: var(--accent);
-  color: #ffffff;
+.market-session-status.is-open {
+  color: var(--teal);
+}
+
+.market-session-status.is-closed {
+  color: var(--red);
+}
+
+.market-session-countdown {
+  color: var(--ink-soft);
 }
 
 .page-shell {
@@ -1199,8 +1214,7 @@ a {
 }
 
 @media (max-width: 1180px) {
-  .site-nav,
-  .site-actions .nav-button:not(.nav-button-primary) {
+  .site-nav {
     display: none;
   }
 
@@ -1234,6 +1248,13 @@ a {
 @media (max-width: 760px) {
   .site-header-inner {
     min-height: 68px;
+    gap: 16px;
+  }
+
+  .market-session {
+    min-height: 42px;
+    padding: 0 14px;
+    font-size: 0.76rem;
   }
 
   .page-shell {
