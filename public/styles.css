@@ -17,7 +17,7 @@
   --red-soft: rgba(240, 68, 82, 0.1);
   --shadow: 0 8px 24px rgba(15, 23, 42, 0.04);
   --radius: 28px;
-  --content: 1320px;
+  --content: 920px;
 }
 
 * {
@@ -58,7 +58,7 @@ a {
 
 .site-header-inner,
 .page-shell {
-  width: min(calc(100vw - 20px), 1320px);
+  width: min(calc(100vw - 32px), 1320px);
   margin: 0 auto;
 }
 
@@ -1408,4 +1408,5 @@ a {
     min-height: 48px;
   }
 }
+
 
