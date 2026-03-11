@@ -36,7 +36,6 @@ const elements = {
   fearGreedNote: document.getElementById("fear-greed-note"),
   fearGreedValue: document.getElementById("fear-greed-value"),
   fedFundsChange: document.getElementById("fed-funds-change"),
-  fedFundsChart: document.getElementById("fed-funds-chart"),
   fedFundsDate: document.getElementById("fed-funds-date"),
   fedFundsDescription: document.getElementById("fed-funds-description"),
   fedFundsNote: document.getElementById("fed-funds-note"),
@@ -505,7 +504,6 @@ function renderFedFunds(fedFunds) {
     elements.fedFundsDate.textContent = "-";
     elements.fedFundsDescription.textContent = "연방기금금리를 불러오지 못했습니다.";
     elements.fedFundsNote.textContent = "-";
-    elements.fedFundsChart.innerHTML = "";
     return;
   }
 
@@ -521,7 +519,6 @@ function renderFedFunds(fedFunds) {
   })} · ${fedFunds.source}`;
   elements.fedFundsDescription.textContent = fedFunds.description;
   elements.fedFundsNote.textContent = fedFunds.nextMeetingNote;
-  renderSparkline(elements.fedFundsChart, fedFunds.points, "fedfunds");
 }
 
 function renderFearGreed(fearGreed) {
