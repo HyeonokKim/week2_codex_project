@@ -17,6 +17,7 @@
 
         <nav class="site-nav" aria-label="주요 메뉴">
           <a href="#liquidity-section">Liquidity</a>
+          <a href="#rates-section">Rates</a>
           <a href="#fx-section">FX</a>
           <a href="#options-section">Options</a>
         </nav>
@@ -239,6 +240,32 @@
           </div>
         </section>
 
+        <section class="section-block" id="rates-section">
+          <div class="section-copy">
+            <p class="section-label">Fed Funds</p>
+            <h2>Fed Funds Interest Rate</h2>
+            <p>유효 연방기금금리의 최신 수준과 최근 90영업일 흐름을 함께 보여줍니다.</p>
+          </div>
+
+          <section class="panel rates-panel">
+            <article class="fx-card rates-card">
+              <div class="fx-card-head">
+                <span class="fx-tag fx-tag-rate">Effective Fed Funds</span>
+                <span class="fx-date" id="fed-funds-date">-</span>
+              </div>
+              <div class="macro-signal-head rates-signal-head">
+                <strong class="fx-value rates-value" id="fed-funds-value">-</strong>
+                <span class="macro-badge" id="fed-funds-signal">-</span>
+              </div>
+              <span class="fx-change" id="fed-funds-change">-</span>
+              <p class="fx-note rates-note" id="fed-funds-description">
+                연방기금금리를 불러오는 중입니다.
+              </p>
+              <p class="fx-note rates-note" id="fed-funds-note">-</p>
+            </article>
+          </section>
+        </section>
+
         <section class="section-block section-grid">
           <div class="section-copy" id="fx-section">
             <p class="section-label">FX Monitor</p>
@@ -320,5 +347,15 @@
         </section>
       </main>
     </div>
+    <button
+      class="back-to-top-button"
+      id="back-to-top-button"
+      type="button"
+      aria-label="페이지 맨 위로 이동"
+    >
+      <span aria-hidden="true">↑</span>
+    </button>
   </body>
 </html>
+
+

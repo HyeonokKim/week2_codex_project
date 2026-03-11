@@ -2,6 +2,7 @@ const state = {
   activeRange: "5Y",
   fedSchedule: null,
   fearGreed: null,
+  fedFunds: null,
   isLoadingLiquidity: false,
   isLoadingOptions: false,
   fx: null,
@@ -24,6 +25,7 @@ const state = {
 };
 
 const elements = {
+  backToTopButton: document.getElementById("back-to-top-button"),
   chart: document.getElementById("liquidity-chart"),
   chartNote: document.getElementById("chart-note"),
   chartTooltip: document.getElementById("chart-tooltip"),
@@ -35,6 +37,12 @@ const elements = {
   fearGreedMarker: document.getElementById("fear-greed-marker"),
   fearGreedNote: document.getElementById("fear-greed-note"),
   fearGreedValue: document.getElementById("fear-greed-value"),
+  fedFundsChange: document.getElementById("fed-funds-change"),
+  fedFundsDate: document.getElementById("fed-funds-date"),
+  fedFundsDescription: document.getElementById("fed-funds-description"),
+  fedFundsNote: document.getElementById("fed-funds-note"),
+  fedFundsSignal: document.getElementById("fed-funds-signal"),
+  fedFundsValue: document.getElementById("fed-funds-value"),
   fxJpyChange: document.getElementById("fx-jpy-change"),
   fxJpyChart: document.getElementById("fx-jpy-chart"),
   fxJpyDate: document.getElementById("fx-jpy-date"),
@@ -90,6 +98,7 @@ const AUTO_REFRESH_MS = {
 const MARKET_TIME_ZONE = "America/New_York";
 const MARKET_OPEN_MINUTES = 9 * 60 + 30;
 const MARKET_CLOSE_MINUTES = 16 * 60;
+const BACK_TO_TOP_THRESHOLD = 480;
 
 function escapeHtml(value) {
   return String(value)
@@ -565,6 +574,33 @@ function renderVix(vix) {
   renderSparkline(elements.vixChart, vix.points, "vix");
 }
 
+function renderFedFunds(fedFunds) {
+  state.fedFunds = fedFunds;
+
+  if (!fedFunds) {
+    elements.fedFundsValue.textContent = "-";
+    elements.fedFundsSignal.textContent = "-";
+    elements.fedFundsChange.textContent = "-";
+    elements.fedFundsDate.textContent = "-";
+    elements.fedFundsDescription.textContent = "연방기금금리를 불러오지 못했습니다.";
+    elements.fedFundsNote.textContent = "-";
+    return;
+  }
+
+  elements.fedFundsValue.textContent = `${formatNumber(fedFunds.latest, 2)}%`;
+  elements.fedFundsSignal.textContent = fedFunds.signal;
+  elements.fedFundsSignal.classList.toggle("is-caution", fedFunds.latest >= 4);
+  elements.fedFundsChange.textContent = `전일 대비 ${formatPlainChange(fedFunds.dailyChange, 2)}%p`;
+  elements.fedFundsChange.classList.toggle("is-up", fedFunds.dailyChange > 0);
+  elements.fedFundsChange.classList.toggle("is-down", fedFunds.dailyChange < 0);
+  elements.fedFundsDate.textContent = `${formatDate(fedFunds.latestDate, {
+    month: "short",
+    day: "numeric",
+  })} · ${fedFunds.source}`;
+  elements.fedFundsDescription.textContent = fedFunds.description;
+  elements.fedFundsNote.textContent = fedFunds.nextMeetingNote;
+}
+
 function renderFearGreed(fearGreed) {
   state.fearGreed = fearGreed;
 
@@ -876,6 +912,15 @@ function hideSearchResults() {
   elements.searchResults.classList.remove("is-visible");
 }
 
+function updateBackToTopButton() {
+  if (!elements.backToTopButton) {
+    return;
+  }
+
+  const shouldShow = window.scrollY > BACK_TO_TOP_THRESHOLD;
+  elements.backToTopButton.classList.toggle("is-visible", shouldShow);
+}
+
 function renderOptionCard(contract, tone) {
   if (!contract) {
     return `
@@ -964,12 +1009,14 @@ async function loadNetLiquidity({ silent = false } = {}) {
     state.fx = payload.fx;
     state.fedSchedule = payload.fedSchedule;
     state.fearGreed = payload.fearGreed;
+    state.fedFunds = payload.fedFunds;
     state.marketTemperature = payload.marketTemperature;
     state.vix = payload.vix;
     state.lastLiquidityCheckAt = new Date();
     renderMetrics(payload.summary);
     renderMarketTemperature(payload.marketTemperature);
     renderFedSchedule(payload.fedSchedule);
+    renderFedFunds(payload.fedFunds);
     renderVix(payload.vix);
     renderFearGreed(payload.fearGreed);
     renderFx(payload.fx);
@@ -1110,6 +1157,17 @@ function bindEvents() {
       hideSearchResults();
     }
   });
+
+  if (elements.backToTopButton) {
+    elements.backToTopButton.addEventListener("click", () => {
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth",
+      });
+    });
+  }
+
+  window.addEventListener("scroll", updateBackToTopButton, { passive: true });
 }
 
 function setupAutoRefresh() {
@@ -1154,6 +1212,7 @@ function setupAutoRefresh() {
 async function init() {
   bindEvents();
   renderMarketSession();
+  updateBackToTopButton();
   setupAutoRefresh();
   await loadNetLiquidity();
   await loadOptions(state.selectedSymbol);

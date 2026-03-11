@@ -7,6 +7,7 @@ const PORT = Number(process.env.PORT || 3210);
 const PUBLIC_DIR = path.join(__dirname, "public");
 
 const FRED_SERIES = {
+  fedFunds: "https://fred.stlouisfed.org/graph/fredgraph.csv?id=DFF",
   jpyUsd: "https://fred.stlouisfed.org/graph/fredgraph.csv?id=DEXJPUS",
   totalAssets: "https://fred.stlouisfed.org/graph/fredgraph.csv?id=WALCL",
   treasuryCash: "https://fred.stlouisfed.org/graph/fredgraph.csv?id=WDTGAL",
@@ -451,6 +452,36 @@ function buildVixSummary(points) {
   };
 }
 
+function buildFedFundsSummary(points, fedSchedule) {
+  const summary = buildSeriesSummary(points, 90);
+  let signal = "완화";
+  let description = "연방기금금리가 낮은 편입니다. 유동성 부담이 상대적으로 덜한 구간입니다.";
+
+  if (summary.latest >= 5) {
+    signal = "제약적";
+    description = "연방기금금리가 높은 구간입니다. 유동성과 밸류에이션에 부담을 줄 수 있습니다.";
+  } else if (summary.latest >= 4) {
+    signal = "높음";
+    description = "연방기금금리가 중립보다 높은 편입니다. 위험자산에는 다소 타이트한 환경입니다.";
+  } else if (summary.latest >= 2.5) {
+    signal = "중립";
+    description = "연방기금금리가 중간 영역입니다. 시장은 향후 인하 또는 동결 경로를 함께 봅니다.";
+  }
+
+  const nextMeeting = fedSchedule?.meetings?.[0];
+  const nextMeetingNote = nextMeeting
+    ? `${nextMeeting.dateLabel} FOMC 일정이 예정돼 있습니다.`
+    : "다음 FOMC 일정 정보를 함께 확인하세요.";
+
+  return {
+    ...summary,
+    description,
+    nextMeetingNote,
+    signal,
+    source: "FRED DFF",
+  };
+}
+
 function normalizeFearGreedLabel(label) {
   const normalized = String(label || "").trim().toLowerCase();
 
@@ -697,6 +728,7 @@ async function loadNetLiquidity() {
       assetsCsv,
       treasuryCsv,
       reverseRepoCsv,
+      fedFundsCsv,
       usdKrwCsv,
       jpyUsdCsv,
       vixCsv,
@@ -706,6 +738,7 @@ async function loadNetLiquidity() {
       fetchText(FRED_SERIES.totalAssets),
       fetchText(FRED_SERIES.treasuryCash),
       fetchText(FRED_SERIES.reverseRepo),
+      fetchText(FRED_SERIES.fedFunds),
       fetchText(FRED_SERIES.usdKrw),
       fetchText(FRED_SERIES.jpyUsd),
       fetchText(FRED_SERIES.vix),
@@ -716,6 +749,7 @@ async function loadNetLiquidity() {
     const assets = parseCsvSeries(assetsCsv);
     const treasuryCash = parseCsvSeries(treasuryCsv);
     const reverseRepo = parseCsvSeries(reverseRepoCsv);
+    const fedFunds = parseCsvSeries(fedFundsCsv);
     const usdKrw = parseCsvSeries(usdKrwCsv);
     const jpyUsd = parseCsvSeries(jpyUsdCsv);
     const vix = parseCsvSeries(vixCsv);
@@ -787,6 +821,13 @@ async function loadNetLiquidity() {
     );
     const marketTemperature = buildMarketTemperature(points, usdKrwSummary, jpyKrwSummary);
     const fedSchedule = buildFedSchedule(fedCalendarHtml);
+    const fedFundsSummary = buildFedFundsSummary(
+      fedFunds.map((row) => ({
+        date: toIsoDate(row.date),
+        value: row.value,
+      })),
+      fedSchedule
+    );
     const vixSummary = buildVixSummary(
       vix.map((row) => ({
         date: toIsoDate(row.date),
@@ -798,6 +839,7 @@ async function loadNetLiquidity() {
     return {
       fedSchedule,
       fearGreed,
+      fedFunds: fedFundsSummary,
       fx: {
         jpyKrw100: {
           ...jpyKrwSummary,
