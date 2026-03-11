@@ -224,28 +224,83 @@ a {
   height: 180px;
   border-radius: 999px;
   background:
-    radial-gradient(circle at 50% 50%, rgba(49, 130, 246, 0.24), transparent 62%),
-    radial-gradient(circle at 72% 32%, rgba(2, 182, 165, 0.18), transparent 34%);
-  filter: blur(12px);
+    radial-gradient(circle at 50% 52%, rgba(49, 130, 246, 0.22), transparent 58%),
+    radial-gradient(circle at 70% 34%, rgba(2, 182, 165, 0.16), transparent 30%),
+    radial-gradient(circle at 34% 62%, rgba(125, 188, 255, 0.16), transparent 28%);
+  filter: blur(14px);
   transform-origin: center;
-  animation: hero-glow-drift 5.8s ease-in-out infinite alternate;
+  animation: hero-water-sway 7.2s ease-in-out infinite;
   z-index: -1;
 }
 
-@keyframes hero-glow-drift {
+.hero-intro::after {
+  content: "";
+  position: absolute;
+  inset: 8px 14% auto;
+  height: 124px;
+  border-radius: 999px;
+  background:
+    linear-gradient(
+      110deg,
+      rgba(255, 255, 255, 0) 0%,
+      rgba(255, 255, 255, 0.18) 18%,
+      rgba(255, 255, 255, 0) 36%
+    ),
+    linear-gradient(
+      250deg,
+      rgba(255, 255, 255, 0) 4%,
+      rgba(255, 255, 255, 0.12) 22%,
+      rgba(255, 255, 255, 0) 42%
+    );
+  mix-blend-mode: screen;
+  filter: blur(10px);
+  opacity: 0.78;
+  animation: hero-water-ripple 5.2s ease-in-out infinite;
+  z-index: -1;
+  pointer-events: none;
+}
+
+@keyframes hero-water-sway {
   0% {
-    transform: translate3d(-6%, 2%, 0) scale(0.9);
-    filter: blur(9px) saturate(1.02);
+    transform: translate3d(-3%, 2%, 0) scaleX(0.96) scaleY(0.92) rotate(-1.2deg);
+    filter: blur(11px) saturate(1.02);
+  }
+
+  25% {
+    transform: translate3d(2%, -2%, 0) scaleX(1.04) scaleY(1.08) rotate(0.8deg);
+    filter: blur(16px) saturate(1.08);
   }
 
   50% {
-    transform: translate3d(0, -5%, 0) scale(1.12);
-    filter: blur(19px) saturate(1.14);
+    transform: translate3d(0, -4%, 0) scaleX(1.08) scaleY(0.98) rotate(-0.6deg);
+    filter: blur(18px) saturate(1.12);
+  }
+
+  75% {
+    transform: translate3d(-2%, 1%, 0) scaleX(0.98) scaleY(1.06) rotate(1deg);
+    filter: blur(15px) saturate(1.06);
   }
 
   100% {
-    transform: translate3d(6%, 3%, 0) scale(1.05);
-    filter: blur(14px) saturate(1.08);
+    transform: translate3d(3%, 3%, 0) scaleX(1.02) scaleY(0.95) rotate(-0.8deg);
+    filter: blur(12px) saturate(1.04);
+  }
+}
+
+@keyframes hero-water-ripple {
+  0% {
+    transform: translate3d(-4%, 0, 0) scaleX(0.94) skewX(-6deg);
+    opacity: 0.52;
+  }
+
+  50% {
+    transform: translate3d(3%, -3%, 0) scaleX(1.08) skewX(5deg);
+    opacity: 0.86;
+  }
+
+  100% {
+    transform: translate3d(-2%, 2%, 0) scaleX(0.98) skewX(-4deg);
+    opacity: 0.58;
   }
 }
 
@@ -557,6 +612,7 @@ a {
 
 @media (prefers-reduced-motion: reduce) {
   .hero-intro::before,
+  .hero-intro::after,
   .panel,
   .fed-item,
   .temperature-panel,
