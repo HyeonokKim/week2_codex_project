@@ -157,7 +157,8 @@ function renderMarketSession() {
 
   if (isOpen) {
     elements.marketSession.innerHTML =
-      '현재 시장상태 : <span class="market-session-status is-open">ON</span>';
+      '<span class="market-session-line">현재 시장상태 : ON</span>';
+    elements.marketSession.className = "market-session is-open";
     return;
   }
 
@@ -165,8 +166,9 @@ function renderMarketSession() {
   const countdown = formatCountdown(nextOpen.getTime() - easternNow.getTime());
 
   elements.marketSession.innerHTML =
-    '현재 시장상태 : <span class="market-session-status is-closed">OFF</span>' +
-    ` <span class="market-session-countdown">다음 장 시작까지 ${escapeHtml(countdown)}</span>`;
+    '<span class="market-session-line">현재 시장상태 : OFF</span>' +
+    `<span class="market-session-countdown">다음 장 시작까지 ${escapeHtml(countdown)}</span>`;
+  elements.marketSession.className = "market-session is-closed";
 }
 
 async function fetchJson(url) {

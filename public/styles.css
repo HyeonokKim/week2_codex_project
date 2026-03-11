@@ -150,8 +150,9 @@ a {
 
 .market-session {
   display: inline-flex;
-  align-items: center;
-  gap: 8px;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
   min-height: 48px;
   margin: 0;
   padding: 0 18px;
@@ -161,23 +162,24 @@ a {
   font-family: "IBM Plex Mono", monospace;
   font-size: 0.84rem;
   font-weight: 500;
+}
+
+.market-session-line {
   white-space: nowrap;
 }
 
-.market-session-status {
-  font-weight: 700;
-}
-
-.market-session-status.is-open {
+.market-session.is-open {
   color: var(--teal);
 }
 
-.market-session-status.is-closed {
+.market-session.is-closed {
   color: var(--red);
 }
 
 .market-session-countdown {
+  display: block;
   color: var(--ink-soft);
+  white-space: nowrap;
 }
 
 .page-shell {
