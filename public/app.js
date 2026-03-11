@@ -6,6 +6,7 @@ const state = {
   isLoadingLiquidity: false,
   isLoadingOptions: false,
   fx: null,
+  indexes: null,
   lastLiquidityCheckAt: null,
   lastOptionsCheckAt: null,
   liquidityRequestToken: 0,
@@ -42,6 +43,7 @@ const elements = {
   fedFundsNote: document.getElementById("fed-funds-note"),
   fedFundsSignal: document.getElementById("fed-funds-signal"),
   fedFundsValue: document.getElementById("fed-funds-value"),
+  indexesNote: document.getElementById("indexes-note"),
   fxJpyChange: document.getElementById("fx-jpy-change"),
   fxJpyChart: document.getElementById("fx-jpy-chart"),
   fxJpyDate: document.getElementById("fx-jpy-date"),
@@ -51,6 +53,10 @@ const elements = {
   fxUsdChart: document.getElementById("fx-usd-chart"),
   fxUsdDate: document.getElementById("fx-usd-date"),
   fxUsdValue: document.getElementById("fx-usd-value"),
+  nasdaqChange: document.getElementById("nasdaq-change"),
+  nasdaqChart: document.getElementById("nasdaq-chart"),
+  nasdaqDate: document.getElementById("nasdaq-date"),
+  nasdaqValue: document.getElementById("nasdaq-value"),
   liquidityStatus: document.getElementById("liquidity-status"),
   metricAssets: document.getElementById("metric-assets"),
   metricChange: document.getElementById("metric-change"),
@@ -64,6 +70,10 @@ const elements = {
   searchResults: document.getElementById("search-results"),
   symbolForm: document.getElementById("symbol-form"),
   symbolInput: document.getElementById("symbol-input"),
+  sp500Change: document.getElementById("sp500-change"),
+  sp500Chart: document.getElementById("sp500-chart"),
+  sp500Date: document.getElementById("sp500-date"),
+  sp500Value: document.getElementById("sp500-value"),
   temperatureDelta: document.getElementById("temperature-delta"),
   temperatureDescription: document.getElementById("temperature-description"),
   temperatureMarker: document.getElementById("temperature-marker"),
@@ -469,6 +479,58 @@ function renderFx(fx) {
 
   elements.fxNote.textContent =
     fx?.note || "달러/원과 엔/원 시계열을 불러오지 못했습니다.";
+}
+
+function renderIndexCard({ changeElement, chartElement, dateElement, tone, valueElement }, data) {
+  if (!data) {
+    valueElement.textContent = "-";
+    dateElement.textContent = "-";
+    changeElement.textContent = "-";
+    changeElement.classList.remove("is-up", "is-down");
+    chartElement.innerHTML = "";
+    return;
+  }
+
+  valueElement.textContent = formatNumber(data.latest, 0);
+  dateElement.textContent = `${formatDate(data.latestDate, {
+    month: "short",
+    day: "numeric",
+  })} · ${data.source}`;
+  changeElement.textContent = `전일 대비 ${formatPlainChange(data.dailyChange, 2)}`;
+  changeElement.classList.toggle("is-up", data.dailyChange > 0);
+  changeElement.classList.toggle("is-down", data.dailyChange < 0);
+  renderSparkline(chartElement, data.points, tone);
+}
+
+function renderIndexes(indexes) {
+  state.indexes = indexes;
+
+  renderIndexCard(
+    {
+      changeElement: elements.sp500Change,
+      chartElement: elements.sp500Chart,
+      dateElement: elements.sp500Date,
+      tone: "sp500",
+      valueElement: elements.sp500Value,
+    },
+    indexes?.sp500
+  );
+
+  renderIndexCard(
+    {
+      changeElement: elements.nasdaqChange,
+      chartElement: elements.nasdaqChart,
+      dateElement: elements.nasdaqDate,
+      tone: "nasdaq",
+      valueElement: elements.nasdaqValue,
+    },
+    indexes?.nasdaq
+  );
+
+  elements.indexesNote.textContent =
+    indexes?.sp500 && indexes?.nasdaq
+      ? "FRED 기준 S&P 500과 Nasdaq Composite 최근 90영업일 흐름입니다."
+      : "S&P 500과 Nasdaq 지수를 불러오지 못했습니다.";
 }
 
 function renderVix(vix) {
@@ -934,6 +996,7 @@ async function loadNetLiquidity({ silent = false } = {}) {
     state.fearGreed = payload.fearGreed;
     state.fedFunds = payload.fedFunds;
     state.marketTemperature = payload.marketTemperature;
+    state.indexes = payload.indexes;
     state.vix = payload.vix;
     state.lastLiquidityCheckAt = new Date();
     renderMetrics(payload.summary);
@@ -942,6 +1005,7 @@ async function loadNetLiquidity({ silent = false } = {}) {
     renderFedFunds(payload.fedFunds);
     renderVix(payload.vix);
     renderFearGreed(payload.fearGreed);
+    renderIndexes(payload.indexes);
     renderFx(payload.fx);
     renderChart();
     setLiquidityStatus(
@@ -1132,4 +1196,3 @@ async function init() {
 }
 
 init();
-
