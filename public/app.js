@@ -24,6 +24,7 @@ const state = {
 };
 
 const elements = {
+  backToTopButton: document.getElementById("back-to-top-button"),
   chart: document.getElementById("liquidity-chart"),
   chartNote: document.getElementById("chart-note"),
   chartTooltip: document.getElementById("chart-tooltip"),
@@ -91,6 +92,8 @@ const AUTO_REFRESH_MS = {
   liquidity: 5 * 60 * 1000,
   options: 30 * 1000,
 };
+
+const BACK_TO_TOP_THRESHOLD = 480;
 
 function escapeHtml(value) {
   return String(value)
@@ -835,6 +838,15 @@ function hideSearchResults() {
   elements.searchResults.classList.remove("is-visible");
 }
 
+function updateBackToTopButton() {
+  if (!elements.backToTopButton) {
+    return;
+  }
+
+  const shouldShow = window.scrollY > BACK_TO_TOP_THRESHOLD;
+  elements.backToTopButton.classList.toggle("is-visible", shouldShow);
+}
+
 function renderOptionCard(contract, tone) {
   if (!contract) {
     return `
@@ -1071,6 +1083,17 @@ function bindEvents() {
       hideSearchResults();
     }
   });
+
+  if (elements.backToTopButton) {
+    elements.backToTopButton.addEventListener("click", () => {
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth",
+      });
+    });
+  }
+
+  window.addEventListener("scroll", updateBackToTopButton, { passive: true });
 }
 
 function setupAutoRefresh() {
@@ -1105,9 +1128,11 @@ function setupAutoRefresh() {
 
 async function init() {
   bindEvents();
+  updateBackToTopButton();
   setupAutoRefresh();
   await loadNetLiquidity();
   await loadOptions(state.selectedSymbol);
 }
 
 init();
+
