@@ -2,7 +2,7 @@
   "name": "us-market-liquidity-dashboard",
   "version": "1.0.0",
   "private": true,
-  "description": "US net liquidity and options positioning dashboard",
+  "description": "US market thermometer dashboard for net liquidity, FX, options, VIX, and Fed events",
   "scripts": {
     "start": "node server.js"
   }
