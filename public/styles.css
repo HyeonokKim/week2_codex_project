@@ -227,7 +227,26 @@ a {
     radial-gradient(circle at 50% 50%, rgba(49, 130, 246, 0.18), transparent 62%),
     radial-gradient(circle at 72% 32%, rgba(2, 182, 165, 0.12), transparent 34%);
   filter: blur(12px);
+  transform-origin: center;
+  animation: hero-glow-drift 9s ease-in-out infinite alternate;
   z-index: -1;
+}
+
+@keyframes hero-glow-drift {
+  0% {
+    transform: translate3d(-1.5%, 0, 0) scale(0.98);
+    filter: blur(12px);
+  }
+
+  50% {
+    transform: translate3d(0, -2%, 0) scale(1.02);
+    filter: blur(15px);
+  }
+
+  100% {
+    transform: translate3d(1.5%, 1%, 0) scale(1);
+    filter: blur(13px);
+  }
 }
 
 .eyebrow,
@@ -537,6 +556,7 @@ a {
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .hero-intro::before,
   .panel,
   .fed-item,
   .temperature-panel,
