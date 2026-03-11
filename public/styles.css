@@ -192,59 +192,51 @@ a {
   margin: 0 auto;
 }
 
-.article-page > section {
+.hero-intro .eyebrow,
+.hero-intro .lede,
+.temperature-banner,
+.macro-stack,
+.section-block {
   opacity: 0;
-  transform: translateY(24px);
+  transform: translateY(-20px);
+  filter: blur(10px);
+  will-change: opacity, transform, filter;
+  animation: page-content-reveal 780ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  animation-delay: 0.34s;
+}
+
+.hero-intro h1 {
+  opacity: 0;
+  transform: translateY(-14px);
   filter: blur(8px);
   will-change: opacity, transform, filter;
-  animation: page-section-reveal 760ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  animation: page-title-reveal 760ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation-delay: 0.08s;
 }
 
-.article-page > section:nth-of-type(1) {
-  animation-delay: 0.06s;
+.hero-intro .eyebrow {
+  animation-delay: 0.18s;
 }
 
-.article-page > section:nth-of-type(2) {
-  animation-delay: 0.14s;
-}
-
-.article-page > section:nth-of-type(3) {
-  animation-delay: 0.22s;
-}
-
-.article-page > section:nth-of-type(4) {
-  animation-delay: 0.3s;
-}
-
-.article-page > section:nth-of-type(5) {
-  animation-delay: 0.38s;
-}
-
-.article-page > section:nth-of-type(6) {
-  animation-delay: 0.46s;
-}
-
-.article-page > section:nth-of-type(7) {
-  animation-delay: 0.54s;
-}
-
-.article-page > section:nth-of-type(8) {
-  animation-delay: 0.62s;
-}
-
-.article-page > section:nth-of-type(9) {
-  animation-delay: 0.7s;
-}
-
-.article-page > section:nth-of-type(10) {
-  animation-delay: 0.78s;
-}
-
-@keyframes page-section-reveal {
+@keyframes page-title-reveal {
   0% {
     opacity: 0;
-    transform: translateY(24px);
+    transform: translateY(-14px);
     filter: blur(8px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
+}
+
+@keyframes page-content-reveal {
+  0% {
+    opacity: 0;
+    transform: translateY(-20px);
+    filter: blur(10px);
   }
 
   100% {
@@ -686,7 +678,12 @@ a {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .article-page > section,
+  .hero-intro h1,
+  .hero-intro .eyebrow,
+  .hero-intro .lede,
+  .temperature-banner,
+  .macro-stack,
+  .section-block,
   .hero-intro::before,
   .hero-intro::after,
   .panel,
@@ -702,7 +699,12 @@ a {
     animation: none;
   }
 
-  .article-page > section {
+  .hero-intro h1,
+  .hero-intro .eyebrow,
+  .hero-intro .lede,
+  .temperature-banner,
+  .macro-stack,
+  .section-block {
     opacity: 1;
     transform: none;
     filter: none;
