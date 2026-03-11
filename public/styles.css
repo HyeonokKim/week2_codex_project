@@ -450,6 +450,12 @@ a {
   padding: 26px 28px;
 }
 
+.fed-panel {
+  min-width: 0;
+  max-width: 100%;
+  overflow: hidden;
+}
+
 .macro-status,
 .macro-footnote {
   margin: 0;
@@ -460,8 +466,17 @@ a {
 
 .fed-calendar {
   display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 260px;
   gap: 12px;
   margin-top: 20px;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding-bottom: 8px;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x proximity;
 }
 
 .fed-item {
@@ -473,6 +488,8 @@ a {
   border: 1px solid var(--line);
   border-radius: 22px;
   background: var(--surface-soft);
+  min-width: 0;
+  scroll-snap-align: start;
 }
 
 .fed-item-badge,
