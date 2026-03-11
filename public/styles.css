@@ -473,11 +473,11 @@ a {
 
 .temperature-panel:hover,
 .temperature-panel:focus-within {
-  transform: translateY(-2px);
-  border-color: rgba(49, 130, 246, 0.22);
+  transform: translateY(-4px);
+  border-color: rgba(49, 130, 246, 0.28);
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.82),
-    0 22px 34px rgba(15, 23, 42, 0.08);
+    0 26px 40px rgba(15, 23, 42, 0.12);
 }
 
 .temperature-panel:hover .temperature-meter-track,
@@ -494,17 +494,17 @@ a {
 
 .temperature-panel:hover .temperature-marker,
 .temperature-panel:focus-within .temperature-marker {
-  transform: translate(-50%, -50%) scale(1.12);
-  box-shadow: 0 16px 30px rgba(15, 23, 42, 0.2);
+  transform: translate(-50%, -50%) scale(1.16);
+  box-shadow: 0 18px 32px rgba(15, 23, 42, 0.22);
   animation: temperature-pulse 1.3s ease-in-out infinite;
 }
 
 .temperature-marker:hover,
 .temperature-marker:focus-visible {
-  transform: translate(-50%, -50%) scale(1.24);
+  transform: translate(-50%, -50%) scale(1.34);
   box-shadow:
-    0 18px 34px rgba(15, 23, 42, 0.24),
-    0 0 0 10px color-mix(in srgb, var(--thermo-color) 18%, transparent);
+    0 20px 38px rgba(15, 23, 42, 0.26),
+    0 0 0 12px color-mix(in srgb, var(--thermo-color) 20%, transparent);
 }
 
 .temperature-marker:hover::after,
@@ -537,7 +537,12 @@ a {
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .panel,
+  .fed-item,
   .temperature-panel,
+  .macro-sparkline,
+  .sentiment-track,
+  .sentiment-marker,
   .temperature-meter-track,
   .temperature-meter-track::after,
   .temperature-marker {
@@ -545,16 +550,29 @@ a {
     animation: none;
   }
 
+  .panel:hover,
+  .panel:focus-within,
+  .fed-item:hover,
+  .fed-item:focus-within,
   .temperature-panel:hover,
   .temperature-panel:focus-within {
     transform: none;
   }
 
+  .macro-signal-card:hover .macro-sparkline,
+  .macro-signal-card:focus-within .macro-sparkline,
+  .chart-panel:hover #liquidity-chart,
+  .chart-panel:focus-within #liquidity-chart,
+  .macro-signal-card:hover .sentiment-track,
+  .macro-signal-card:focus-within .sentiment-track,
   .temperature-panel:hover .temperature-meter-track,
   .temperature-panel:focus-within .temperature-meter-track {
     transform: none;
+    filter: none;
   }
 
+  .macro-signal-card:hover .sentiment-marker,
+  .macro-signal-card:focus-within .sentiment-marker,
   .temperature-panel:hover .temperature-marker,
   .temperature-panel:focus-within .temperature-marker {
     transform: translate(-50%, -50%);
@@ -639,6 +657,19 @@ a {
   background: var(--surface-soft);
   min-width: 0;
   scroll-snap-align: start;
+  transition:
+    transform 220ms ease,
+    box-shadow 220ms ease,
+    border-color 220ms ease,
+    background-color 220ms ease;
+}
+
+.fed-item:hover,
+.fed-item:focus-within {
+  transform: translateY(-3px);
+  border-color: rgba(49, 130, 246, 0.18);
+  background: #ffffff;
+  box-shadow: 0 18px 28px rgba(15, 23, 42, 0.08);
 }
 
 .fed-item-badge,
@@ -737,6 +768,7 @@ a {
   width: 100%;
   height: auto;
   margin-top: 16px;
+  transition: transform 220ms ease, filter 220ms ease;
 }
 
 .macro-description {
@@ -758,6 +790,7 @@ a {
   height: 14px;
   border-radius: 999px;
   background: linear-gradient(90deg, #3182f6 0%, #90bfff 25%, #eef2f5 50%, #ffc298 75%, #f04452 100%);
+  transition: transform 220ms ease, box-shadow 220ms ease;
 }
 
 .sentiment-marker {
@@ -771,6 +804,7 @@ a {
   background: var(--ink);
   box-shadow: 0 10px 20px rgba(15, 23, 42, 0.15);
   transform: translate(-50%, -50%);
+  transition: transform 220ms ease, box-shadow 220ms ease;
 }
 
 .sentiment-scale {
@@ -787,6 +821,38 @@ a {
   border-radius: var(--radius);
   background: var(--surface);
   box-shadow: var(--shadow);
+  transition:
+    transform 220ms ease,
+    box-shadow 220ms ease,
+    border-color 220ms ease,
+    background-color 220ms ease;
+}
+
+.panel:hover,
+.panel:focus-within {
+  transform: translateY(-3px);
+  border-color: rgba(49, 130, 246, 0.18);
+  box-shadow: 0 22px 38px rgba(15, 23, 42, 0.1);
+}
+
+.macro-signal-card:hover .macro-sparkline,
+.macro-signal-card:focus-within .macro-sparkline,
+.chart-panel:hover #liquidity-chart,
+.chart-panel:focus-within #liquidity-chart {
+  transform: translateY(-2px) scale(1.01);
+  filter: saturate(1.05);
+}
+
+.macro-signal-card:hover .sentiment-track,
+.macro-signal-card:focus-within .sentiment-track {
+  transform: scaleY(1.08);
+  box-shadow: 0 10px 22px rgba(15, 23, 42, 0.08);
+}
+
+.macro-signal-card:hover .sentiment-marker,
+.macro-signal-card:focus-within .sentiment-marker {
+  transform: translate(-50%, -50%) scale(1.12);
+  box-shadow: 0 14px 28px rgba(15, 23, 42, 0.18);
 }
 
 .hero-metric {
