@@ -63,9 +63,9 @@ a {
 }
 
 .site-header-inner {
-  display: flex;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
   align-items: center;
-  justify-content: space-between;
   gap: 24px;
   min-height: 78px;
 }
@@ -132,10 +132,13 @@ a {
 .site-nav {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 34px;
   color: #4e5968;
   font-size: 1.05rem;
   font-weight: 500;
+  justify-self: center;
+  text-align: center;
 }
 
 .site-nav a:hover {
@@ -146,6 +149,7 @@ a {
   display: inline-flex;
   align-items: center;
   gap: 12px;
+  justify-self: end;
 }
 
 .market-session {
