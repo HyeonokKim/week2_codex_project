@@ -633,86 +633,11 @@ a {
   font-size: 0.72rem;
 }
 
-.showcase-wrap {
-  margin-top: 42px;
-}
-
 .panel {
   border: 1px solid var(--line);
   border-radius: var(--radius);
   background: var(--surface);
   box-shadow: var(--shadow);
-}
-
-.showcase-stage {
-  position: relative;
-  min-height: 560px;
-  padding: 42px;
-  overflow: hidden;
-  background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.9), rgba(240, 244, 248, 0.96)),
-    radial-gradient(circle at top right, rgba(49, 130, 246, 0.08), transparent 28%);
-}
-
-.showcase-stage::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background-image:
-    linear-gradient(rgba(25, 31, 40, 0.04) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(25, 31, 40, 0.04) 1px, transparent 1px);
-  background-size: 34px 34px;
-  mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.18), transparent 94%);
-  pointer-events: none;
-}
-
-.showcase-card {
-  position: absolute;
-  z-index: 1;
-  border: 1px solid rgba(229, 232, 235, 0.9);
-  border-radius: 28px;
-  background: rgba(255, 255, 255, 0.92);
-  box-shadow: 0 24px 60px rgba(15, 23, 42, 0.08);
-  backdrop-filter: blur(8px);
-}
-
-.showcase-card::after {
-  content: "";
-  position: absolute;
-  inset: auto 18px 10px;
-  height: 10px;
-  border-radius: 50%;
-  background: rgba(180, 190, 203, 0.12);
-  filter: blur(6px);
-  z-index: -1;
-}
-
-.showcase-card-formula {
-  top: 46px;
-  left: 54px;
-  width: 300px;
-  padding: 24px 24px 22px;
-}
-
-.showcase-formula {
-  display: block;
-  font-size: 1.18rem;
-  line-height: 1.5;
-  letter-spacing: -0.04em;
-}
-
-.showcase-card-formula p {
-  margin: 10px 0 0;
-  color: var(--ink-soft);
-  line-height: 1.7;
-}
-
-.showcase-card-primary {
-  top: 136px;
-  left: 198px;
-  width: 420px;
-  padding: 28px 28px 26px;
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.94), rgba(250, 252, 255, 0.98));
 }
 
 .hero-metric {
@@ -734,34 +659,6 @@ a {
   margin-top: 10px;
   color: var(--ink-soft);
   font-size: 0.74rem;
-}
-
-.showcase-card-asset,
-.showcase-card-tga,
-.showcase-card-rrp,
-.showcase-card-change {
-  width: 220px;
-  padding: 20px 22px;
-}
-
-.showcase-card-asset {
-  top: 76px;
-  right: 70px;
-}
-
-.showcase-card-tga {
-  top: 280px;
-  left: 72px;
-}
-
-.showcase-card-rrp {
-  top: 340px;
-  right: 260px;
-}
-
-.showcase-card-change {
-  bottom: 48px;
-  right: 88px;
 }
 
 .showcase-value {
@@ -914,6 +811,59 @@ a {
 
 .chart-tooltip.is-hidden {
   opacity: 0;
+}
+
+.liquidity-summary {
+  display: grid;
+  gap: 14px;
+  margin-top: 18px;
+}
+
+.liquidity-summary-main,
+.liquidity-summary-grid {
+  display: grid;
+  gap: 14px;
+}
+
+.liquidity-summary-main {
+  grid-template-columns: minmax(0, 1.15fr) minmax(280px, 0.85fr);
+}
+
+.liquidity-summary-grid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.liquidity-summary-card {
+  border: 1px solid var(--line);
+  border-radius: 24px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(247, 250, 252, 0.98));
+  padding: 20px 22px;
+}
+
+.liquidity-summary-formula-text {
+  display: block;
+  margin-top: 8px;
+  font-size: 1.14rem;
+  line-height: 1.5;
+  letter-spacing: -0.04em;
+}
+
+.liquidity-summary-formula p {
+  margin: 10px 0 0;
+  color: var(--ink-soft);
+  line-height: 1.7;
+}
+
+.liquidity-summary-primary {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 100%;
+}
+
+.liquidity-summary-primary .hero-metric {
+  font-size: clamp(2.15rem, 4vw, 3.2rem);
 }
 
 .chart-footer {
@@ -1254,12 +1204,8 @@ a {
     display: none;
   }
 
-  .showcase-stage {
-    min-height: 760px;
-  }
-
-  .showcase-card-primary {
-    left: 120px;
+  .liquidity-summary-main {
+    grid-template-columns: 1fr;
   }
 }
 
@@ -1272,21 +1218,8 @@ a {
     grid-template-columns: 1fr;
   }
 
-  .showcase-stage {
-    min-height: auto;
-    display: grid;
-    gap: 14px;
-    padding: 22px;
-  }
-
-  .showcase-card {
-    position: relative;
-    inset: auto;
-    width: auto;
-  }
-
-  .showcase-card::after {
-    display: none;
+  .liquidity-summary-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .section-grid {
@@ -1310,6 +1243,10 @@ a {
 
   .hero-intro h1 {
     font-size: clamp(2.1rem, 8vw, 3rem);
+  }
+
+  .liquidity-summary-grid {
+    grid-template-columns: 1fr;
   }
 
   .lede,
