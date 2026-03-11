@@ -153,7 +153,7 @@ a {
   align-items: center;
   justify-content: center;
   min-height: 48px;
-  padding: 0 18px;
+  padding: 0;
   border-radius: 16px;
   background: #f2f4f6;
   color: #4e5968;
@@ -868,7 +868,7 @@ a {
 
 .chart-footer {
   display: grid;
-  gap: 10px;
+  justify-content: center;
   margin-top: 14px;
 }
 
@@ -1056,7 +1056,7 @@ a {
 .search-row {
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
-  gap: 10px;
+  justify-content: center;
 }
 
 .search-row input {
@@ -1232,6 +1232,54 @@ a {
   font-size: 1rem;
 }
 
+.back-to-top-button {
+  position: fixed;
+  right: 28px;
+  bottom: 28px;
+  z-index: 30;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 52px;
+  min-height: 52px;
+  padding: 0;
+  border: 0;
+  border-radius: 999px;
+  background: rgba(107, 118, 132, 0.9);
+  box-shadow: 0 18px 38px rgba(15, 23, 42, 0.16);
+  color: #ffffff;
+  cursor: pointer;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(16px);
+  transition:
+    opacity 180ms ease,
+    transform 180ms ease,
+    background-color 180ms ease;
+}
+
+.back-to-top-button:hover,
+.back-to-top-button:focus-visible {
+  background: #4e5968;
+}
+
+.back-to-top-button:focus-visible {
+  outline: 3px solid rgba(49, 130, 246, 0.34);
+  outline-offset: 3px;
+}
+
+.back-to-top-button.is-visible {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+.back-to-top-button span:first-child {
+  font-size: 1.05rem;
+  font-weight: 800;
+}
+
+
 @media (max-width: 1180px) {
   .site-nav,
   .site-actions .nav-button:not(.nav-button-primary) {
@@ -1339,4 +1387,14 @@ a {
     max-width: none;
     text-align: left;
   }
+
+  .back-to-top-button {
+    right: 16px;
+    bottom: 16px;
+    width: 48px;
+    min-height: 48px;
+  }
 }
+
+
+
