@@ -224,28 +224,28 @@ a {
   height: 180px;
   border-radius: 999px;
   background:
-    radial-gradient(circle at 50% 50%, rgba(49, 130, 246, 0.18), transparent 62%),
-    radial-gradient(circle at 72% 32%, rgba(2, 182, 165, 0.12), transparent 34%);
+    radial-gradient(circle at 50% 50%, rgba(49, 130, 246, 0.24), transparent 62%),
+    radial-gradient(circle at 72% 32%, rgba(2, 182, 165, 0.18), transparent 34%);
   filter: blur(12px);
   transform-origin: center;
-  animation: hero-glow-drift 6.4s ease-in-out infinite alternate;
+  animation: hero-glow-drift 5.8s ease-in-out infinite alternate;
   z-index: -1;
 }
 
 @keyframes hero-glow-drift {
   0% {
-    transform: translate3d(-4%, 1%, 0) scale(0.94);
-    filter: blur(10px) saturate(1);
+    transform: translate3d(-6%, 2%, 0) scale(0.9);
+    filter: blur(9px) saturate(1.02);
   }
 
   50% {
-    transform: translate3d(0, -4%, 0) scale(1.08);
-    filter: blur(17px) saturate(1.08);
+    transform: translate3d(0, -5%, 0) scale(1.12);
+    filter: blur(19px) saturate(1.14);
   }
 
   100% {
-    transform: translate3d(4%, 2%, 0) scale(1.03);
-    filter: blur(13px) saturate(1.04);
+    transform: translate3d(6%, 3%, 0) scale(1.05);
+    filter: blur(14px) saturate(1.08);
   }
 }
 
