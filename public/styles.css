@@ -229,7 +229,7 @@ a {
     radial-gradient(circle at 34% 62%, rgba(125, 188, 255, 0.22), transparent 28%);
   filter: blur(16px);
   transform-origin: center;
-  animation: hero-water-sway 7.2s ease-in-out infinite;
+  animation: hero-water-sway 5.4s ease-in-out infinite;
   z-index: -1;
 }
 
@@ -255,52 +255,52 @@ a {
   mix-blend-mode: screen;
   filter: blur(9px);
   opacity: 0.92;
-  animation: hero-water-ripple 5.2s ease-in-out infinite;
+  animation: hero-water-ripple 3.9s ease-in-out infinite;
   z-index: -1;
   pointer-events: none;
 }
 
 @keyframes hero-water-sway {
   0% {
-    transform: translate3d(-5%, 3%, 0) scaleX(0.92) scaleY(0.88) rotate(-1.8deg);
+    transform: translate3d(-6%, 2%, 0) scaleX(0.9) scaleY(0.92) skewX(-5deg);
     filter: blur(12px) saturate(1.08);
   }
 
   25% {
-    transform: translate3d(3%, -3%, 0) scaleX(1.08) scaleY(1.12) rotate(1.2deg);
+    transform: translate3d(4%, -2%, 0) scaleX(1.08) scaleY(1.06) skewX(4deg);
     filter: blur(18px) saturate(1.16);
   }
 
   50% {
-    transform: translate3d(0, -6%, 0) scaleX(1.14) scaleY(0.96) rotate(-1deg);
+    transform: translate3d(0, -4%, 0) scaleX(1.16) scaleY(0.98) skewX(-3deg);
     filter: blur(21px) saturate(1.22);
   }
 
   75% {
-    transform: translate3d(-3%, 2%, 0) scaleX(0.96) scaleY(1.1) rotate(1.4deg);
+    transform: translate3d(-4%, 1%, 0) scaleX(0.94) scaleY(1.08) skewX(5deg);
     filter: blur(17px) saturate(1.14);
   }
 
   100% {
-    transform: translate3d(5%, 4%, 0) scaleX(1.06) scaleY(0.92) rotate(-1.2deg);
+    transform: translate3d(6%, 3%, 0) scaleX(1.04) scaleY(0.94) skewX(-4deg);
     filter: blur(13px) saturate(1.12);
   }
 }
 
 @keyframes hero-water-ripple {
   0% {
-    transform: translate3d(-6%, 0, 0) scaleX(0.9) skewX(-8deg);
-    opacity: 0.64;
+    transform: translate3d(-8%, 0, 0) scaleX(0.86) skewX(-10deg);
+    opacity: 0.7;
   }
 
   50% {
-    transform: translate3d(5%, -4%, 0) scaleX(1.14) skewX(7deg);
+    transform: translate3d(7%, -3%, 0) scaleX(1.18) skewX(9deg);
     opacity: 1;
   }
 
   100% {
-    transform: translate3d(-3%, 3%, 0) scaleX(1) skewX(-6deg);
-    opacity: 0.7;
+    transform: translate3d(-5%, 2%, 0) scaleX(0.96) skewX(-8deg);
+    opacity: 0.76;
   }
 }
 
