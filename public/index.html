@@ -257,6 +257,52 @@
           </section>
         </section>
 
+        <section class="section-block" id="indexes-section">
+          <div class="section-copy">
+            <p class="section-label">Market Indexes</p>
+            <h2>S&amp;P 500 · Nasdaq</h2>
+            <p>미국 대표 주가지수의 최근 수준과 90영업일 추이를 나란히 확인할 수 있습니다.</p>
+          </div>
+
+          <section class="panel fx-panel">
+            <div class="fx-grid">
+              <article class="fx-card fx-card-sp500">
+                <div class="fx-card-head">
+                  <span class="fx-tag">S&amp;P 500</span>
+                  <span class="fx-date" id="sp500-date">-</span>
+                </div>
+                <strong class="fx-value" id="sp500-value">-</strong>
+                <span class="fx-change" id="sp500-change">-</span>
+                <svg
+                  class="fx-sparkline"
+                  id="sp500-chart"
+                  viewBox="0 0 280 92"
+                  role="img"
+                  aria-label="S&P 500 최근 추이"
+                ></svg>
+              </article>
+
+              <article class="fx-card fx-card-nasdaq">
+                <div class="fx-card-head">
+                  <span class="fx-tag">Nasdaq</span>
+                  <span class="fx-date" id="nasdaq-date">-</span>
+                </div>
+                <strong class="fx-value" id="nasdaq-value">-</strong>
+                <span class="fx-change" id="nasdaq-change">-</span>
+                <svg
+                  class="fx-sparkline"
+                  id="nasdaq-chart"
+                  viewBox="0 0 280 92"
+                  role="img"
+                  aria-label="Nasdaq 최근 추이"
+                ></svg>
+              </article>
+            </div>
+
+            <p class="fx-note" id="indexes-note">S&amp;P 500과 Nasdaq 지수를 불러오는 중입니다.</p>
+          </section>
+        </section>
+
         <section class="section-block section-grid">
           <div class="section-copy" id="fx-section">
             <p class="section-label">FX Monitor</p>

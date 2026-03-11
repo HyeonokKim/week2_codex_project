@@ -927,7 +927,7 @@ a {
   stroke: var(--accent);
   stroke-linecap: round;
   stroke-linejoin: round;
-  stroke-width: 4;
+  stroke-width: 3.2;
 }
 
 .chart-hover-line {
@@ -1094,6 +1094,16 @@ a {
   color: var(--teal);
 }
 
+.fx-card-sp500 .fx-tag {
+  background: rgba(49, 130, 246, 0.1);
+  color: #2563eb;
+}
+
+.fx-card-nasdaq .fx-tag {
+  background: rgba(147, 51, 234, 0.1);
+  color: #7c3aed;
+}
+
 .fx-tag-rate {
   background: rgba(90, 98, 255, 0.1);
   color: #4d5bff;
@@ -1135,7 +1145,7 @@ a {
   fill: none;
   stroke-linecap: round;
   stroke-linejoin: round;
-  stroke-width: 3;
+  stroke-width: 2.4;
 }
 
 .fx-line-usd {
@@ -1160,6 +1170,24 @@ a {
 
 .fx-fill-vix {
   fill: rgba(240, 108, 0, 0.12);
+}
+
+.fx-line-sp500 {
+  stroke: #2563eb;
+  stroke-width: 2;
+}
+
+.fx-fill-sp500 {
+  fill: rgba(37, 99, 235, 0.12);
+}
+
+.fx-line-nasdaq {
+  stroke: #7c3aed;
+  stroke-width: 2;
+}
+
+.fx-fill-nasdaq {
+  fill: rgba(124, 58, 237, 0.12);
 }
 
 .fx-line-fedfunds {

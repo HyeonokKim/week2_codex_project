@@ -9,6 +9,8 @@ const PUBLIC_DIR = path.join(__dirname, "public");
 const FRED_SERIES = {
   fedFunds: "https://fred.stlouisfed.org/graph/fredgraph.csv?id=DFF",
   jpyUsd: "https://fred.stlouisfed.org/graph/fredgraph.csv?id=DEXJPUS",
+  nasdaq: "https://fred.stlouisfed.org/graph/fredgraph.csv?id=NASDAQCOM",
+  sp500: "https://fred.stlouisfed.org/graph/fredgraph.csv?id=SP500",
   totalAssets: "https://fred.stlouisfed.org/graph/fredgraph.csv?id=WALCL",
   treasuryCash: "https://fred.stlouisfed.org/graph/fredgraph.csv?id=WDTGAL",
   reverseRepo: "https://fred.stlouisfed.org/graph/fredgraph.csv?id=RRPONTSYD",
@@ -729,6 +731,8 @@ async function loadNetLiquidity() {
       treasuryCsv,
       reverseRepoCsv,
       fedFundsCsv,
+      sp500Csv,
+      nasdaqCsv,
       usdKrwCsv,
       jpyUsdCsv,
       vixCsv,
@@ -739,6 +743,8 @@ async function loadNetLiquidity() {
       fetchText(FRED_SERIES.treasuryCash),
       fetchText(FRED_SERIES.reverseRepo),
       fetchText(FRED_SERIES.fedFunds),
+      fetchText(FRED_SERIES.sp500),
+      fetchText(FRED_SERIES.nasdaq),
       fetchText(FRED_SERIES.usdKrw),
       fetchText(FRED_SERIES.jpyUsd),
       fetchText(FRED_SERIES.vix),
@@ -750,6 +756,8 @@ async function loadNetLiquidity() {
     const treasuryCash = parseCsvSeries(treasuryCsv);
     const reverseRepo = parseCsvSeries(reverseRepoCsv);
     const fedFunds = parseCsvSeries(fedFundsCsv);
+    const sp500 = parseCsvSeries(sp500Csv);
+    const nasdaq = parseCsvSeries(nasdaqCsv);
     const usdKrw = parseCsvSeries(usdKrwCsv);
     const jpyUsd = parseCsvSeries(jpyUsdCsv);
     const vix = parseCsvSeries(vixCsv);
@@ -840,6 +848,30 @@ async function loadNetLiquidity() {
       fedSchedule,
       fearGreed,
       fedFunds: fedFundsSummary,
+      indexes: {
+        nasdaq: {
+          ...buildSeriesSummary(
+            nasdaq.map((row) => ({
+              date: toIsoDate(row.date),
+              value: row.value,
+            })),
+            90
+          ),
+          label: "Nasdaq Composite",
+          source: "FRED NASDAQCOM",
+        },
+        sp500: {
+          ...buildSeriesSummary(
+            sp500.map((row) => ({
+              date: toIsoDate(row.date),
+              value: row.value,
+            })),
+            90
+          ),
+          label: "S&P 500",
+          source: "FRED SP500",
+        },
+      },
       fx: {
         jpyKrw100: {
           ...jpyKrwSummary,
