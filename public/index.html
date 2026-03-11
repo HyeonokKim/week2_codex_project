@@ -6,12 +6,28 @@
     <title>flow signal</title>
     <link rel="stylesheet" href="/styles.css" />
     <script>
-      if ("scrollRestoration" in history) {
-        history.scrollRestoration = "manual";
-      }
-      window.scrollTo(0, 0);
-      window.addEventListener("pageshow", () => window.scrollTo(0, 0));
-      window.addEventListener("load", () => window.scrollTo(0, 0));
+      const resetScrollToTop = () => {
+        if ("scrollRestoration" in history) {
+          history.scrollRestoration = "manual";
+        }
+
+        window.scrollTo(0, 0);
+        document.documentElement.scrollTop = 0;
+        document.body.scrollTop = 0;
+      };
+
+      resetScrollToTop();
+      window.addEventListener("DOMContentLoaded", resetScrollToTop);
+      window.addEventListener("pageshow", resetScrollToTop);
+      window.addEventListener("load", () => {
+        resetScrollToTop();
+        requestAnimationFrame(() => {
+          resetScrollToTop();
+          requestAnimationFrame(resetScrollToTop);
+        });
+        setTimeout(resetScrollToTop, 80);
+        setTimeout(resetScrollToTop, 220);
+      });
     </script>
     <script src="/app.js" defer></script>
   </head>
