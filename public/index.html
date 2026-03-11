@@ -156,44 +156,6 @@
           </div>
         </section>
 
-        <section class="showcase-wrap">
-          <div class="showcase-stage panel">
-            <article class="showcase-card showcase-card-formula">
-              <span class="showcase-label">Formula</span>
-              <strong class="showcase-formula"
-                >Total Assets - (Reverse Repo + Treasury Cash)</strong
-              >
-              <p>순유동성은 연준 총자산에서 역레포와 재무부 현금잔고를 차감한 값입니다.</p>
-            </article>
-
-            <article class="showcase-card showcase-card-primary">
-              <span class="metric-label">순유동성</span>
-              <strong class="metric-value hero-metric" id="metric-net">-</strong>
-              <span class="metric-meta" id="metric-date">-</span>
-            </article>
-
-            <article class="showcase-card showcase-card-asset">
-              <span class="showcase-label">연준 총자산</span>
-              <strong class="showcase-value" id="metric-assets">-</strong>
-            </article>
-
-            <article class="showcase-card showcase-card-tga">
-              <span class="showcase-label">재무부 현금잔고</span>
-              <strong class="showcase-value" id="metric-tga">-</strong>
-            </article>
-
-            <article class="showcase-card showcase-card-rrp">
-              <span class="showcase-label">역레포</span>
-              <strong class="showcase-value" id="metric-rrp">-</strong>
-            </article>
-
-            <article class="showcase-card showcase-card-change">
-              <span class="showcase-label">주간 변화</span>
-              <strong class="showcase-value" id="metric-change">-</strong>
-            </article>
-          </div>
-        </section>
-
         <section class="article-copy">
           <p>
             순유동성은 주간 매크로 환경을 읽는 핵심 지표입니다. 여기에 달러/원과 엔/원의 흐름을 함께 보면
@@ -233,6 +195,46 @@
                 aria-label="미국 순유동성 시계열 차트"
               ></svg>
               <div class="chart-tooltip is-hidden" id="chart-tooltip"></div>
+            </div>
+
+            <div class="liquidity-summary">
+              <div class="liquidity-summary-main">
+                <article class="liquidity-summary-card liquidity-summary-formula">
+                  <span class="showcase-label">Formula</span>
+                  <strong class="liquidity-summary-formula-text"
+                    >Total Assets - (Reverse Repo + Treasury Cash)</strong
+                  >
+                  <p>순유동성은 연준 총자산에서 역레포와 재무부 현금잔고를 차감한 값입니다.</p>
+                </article>
+
+                <article class="liquidity-summary-card liquidity-summary-primary">
+                  <span class="metric-label">순유동성</span>
+                  <strong class="metric-value hero-metric" id="metric-net">-</strong>
+                  <span class="metric-meta" id="metric-date">-</span>
+                </article>
+              </div>
+
+              <div class="liquidity-summary-grid">
+                <article class="liquidity-summary-card">
+                  <span class="showcase-label">연준 총자산</span>
+                  <strong class="showcase-value" id="metric-assets">-</strong>
+                </article>
+
+                <article class="liquidity-summary-card">
+                  <span class="showcase-label">재무부 현금잔고</span>
+                  <strong class="showcase-value" id="metric-tga">-</strong>
+                </article>
+
+                <article class="liquidity-summary-card">
+                  <span class="showcase-label">역레포</span>
+                  <strong class="showcase-value" id="metric-rrp">-</strong>
+                </article>
+
+                <article class="liquidity-summary-card">
+                  <span class="showcase-label">주간 변화</span>
+                  <strong class="showcase-value" id="metric-change">-</strong>
+                </article>
+              </div>
             </div>
 
             <div class="chart-footer">
