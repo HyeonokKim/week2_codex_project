@@ -391,7 +391,7 @@ a {
     #ffb0b7 68%,
     #f04452 100%
   );
-  overflow: hidden;
+  overflow: visible;
   transition: transform 220ms ease, box-shadow 220ms ease;
 }
 
@@ -442,10 +442,24 @@ a {
   background: var(--thermo-color);
   box-shadow: 0 12px 26px rgba(15, 23, 42, 0.16);
   transform: translate(-50%, -50%);
+  cursor: pointer;
   transition:
     transform 220ms ease,
     box-shadow 220ms ease,
     background-color 220ms ease;
+}
+
+.temperature-marker::after {
+  content: "";
+  position: absolute;
+  inset: -8px;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--thermo-color) 18%, transparent);
+  opacity: 0;
+  transform: scale(0.72);
+  transition:
+    opacity 220ms ease,
+    transform 220ms ease;
 }
 
 .temperature-scale {
@@ -483,6 +497,20 @@ a {
   transform: translate(-50%, -50%) scale(1.12);
   box-shadow: 0 16px 30px rgba(15, 23, 42, 0.2);
   animation: temperature-pulse 1.3s ease-in-out infinite;
+}
+
+.temperature-marker:hover,
+.temperature-marker:focus-visible {
+  transform: translate(-50%, -50%) scale(1.24);
+  box-shadow:
+    0 18px 34px rgba(15, 23, 42, 0.24),
+    0 0 0 10px color-mix(in srgb, var(--thermo-color) 18%, transparent);
+}
+
+.temperature-marker:hover::after,
+.temperature-marker:focus-visible::after {
+  opacity: 1;
+  transform: scale(1);
 }
 
 @keyframes temperature-shimmer {
@@ -530,6 +558,18 @@ a {
   .temperature-panel:hover .temperature-marker,
   .temperature-panel:focus-within .temperature-marker {
     transform: translate(-50%, -50%);
+  }
+
+  .temperature-marker:hover,
+  .temperature-marker:focus-visible {
+    transform: translate(-50%, -50%);
+    box-shadow: 0 12px 26px rgba(15, 23, 42, 0.16);
+  }
+
+  .temperature-marker:hover::after,
+  .temperature-marker:focus-visible::after {
+    opacity: 0;
+    transform: scale(0.72);
   }
 }
 
