@@ -688,8 +688,14 @@ a {
   .hero-intro::after,
   .panel,
   .fed-item,
+  .liquidity-summary-card,
+  .fx-card,
+  .option-card,
+  .option-stat,
+  .search-result,
   .temperature-panel,
   .macro-sparkline,
+  .fx-sparkline,
   .sentiment-track,
   .sentiment-marker,
   .temperature-meter-track,
@@ -714,6 +720,12 @@ a {
   .panel:focus-within,
   .fed-item:hover,
   .fed-item:focus-within,
+  .liquidity-summary-card:hover,
+  .liquidity-summary-card:focus-within,
+  .fx-card:hover,
+  .fx-card:focus-within,
+  .option-card:hover,
+  .option-card:focus-within,
   .temperature-panel:hover,
   .temperature-panel:focus-within {
     transform: none;
@@ -723,6 +735,10 @@ a {
   .macro-signal-card:focus-within .macro-sparkline,
   .chart-panel:hover #liquidity-chart,
   .chart-panel:focus-within #liquidity-chart,
+  .fx-card:hover .fx-sparkline,
+  .fx-card:focus-within .fx-sparkline,
+  .rates-card:hover .fx-sparkline,
+  .rates-card:focus-within .fx-sparkline,
   .macro-signal-card:hover .sentiment-track,
   .macro-signal-card:focus-within .sentiment-track,
   .temperature-panel:hover .temperature-meter-track,
@@ -736,6 +752,13 @@ a {
   .temperature-panel:hover .temperature-marker,
   .temperature-panel:focus-within .temperature-marker {
     transform: translate(-50%, -50%);
+  }
+
+  .option-card:hover .option-stat,
+  .option-card:focus-within .option-stat,
+  .search-result:hover,
+  .search-result:focus-visible {
+    transform: none;
   }
 
   .temperature-marker:hover,
@@ -1130,6 +1153,7 @@ a {
   display: block;
   width: 100%;
   height: auto;
+  transition: transform 220ms ease, filter 220ms ease;
 }
 
 .chart-grid-line,
@@ -1214,6 +1238,18 @@ a {
   background:
     linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(247, 250, 252, 0.98));
   padding: 20px 22px;
+  transition:
+    transform 220ms ease,
+    box-shadow 220ms ease,
+    border-color 220ms ease,
+    background-color 220ms ease;
+}
+
+.liquidity-summary-card:hover,
+.liquidity-summary-card:focus-within {
+  transform: translateY(-3px);
+  border-color: rgba(49, 130, 246, 0.18);
+  box-shadow: 0 18px 28px rgba(15, 23, 42, 0.08);
 }
 
 .liquidity-summary-formula-text {
@@ -1285,6 +1321,19 @@ a {
   border-radius: 24px;
   border: 1px solid var(--line);
   background: var(--surface-soft);
+  transition:
+    transform 220ms ease,
+    box-shadow 220ms ease,
+    border-color 220ms ease,
+    background-color 220ms ease;
+}
+
+.fx-card:hover,
+.fx-card:focus-within {
+  transform: translateY(-3px);
+  border-color: rgba(49, 130, 246, 0.18);
+  background: #ffffff;
+  box-shadow: 0 18px 28px rgba(15, 23, 42, 0.08);
 }
 
 .fx-card-head,
@@ -1445,6 +1494,14 @@ a {
   margin-top: 10px;
 }
 
+.fx-card:hover .fx-sparkline,
+.fx-card:focus-within .fx-sparkline,
+.rates-card:hover .fx-sparkline,
+.rates-card:focus-within .fx-sparkline {
+  transform: translateY(-2px) scale(1.01);
+  filter: saturate(1.06);
+}
+
 .search-form {
   position: relative;
 }
@@ -1514,6 +1571,7 @@ a {
   background: transparent;
   text-align: left;
   cursor: pointer;
+  transition: background-color 180ms ease, transform 180ms ease;
 }
 
 .search-result:last-child {
@@ -1523,6 +1581,7 @@ a {
 .search-result:hover,
 .search-result:focus-visible {
   background: var(--surface-soft);
+  transform: translateY(-1px);
 }
 
 .search-result-symbol {
@@ -1597,6 +1656,19 @@ a {
   border: 1px solid var(--line);
   border-radius: 22px;
   background: var(--surface-soft);
+  transition:
+    transform 220ms ease,
+    box-shadow 220ms ease,
+    border-color 220ms ease,
+    background-color 220ms ease;
+}
+
+.option-card:hover,
+.option-card:focus-within {
+  transform: translateY(-3px);
+  border-color: rgba(49, 130, 246, 0.18);
+  background: #ffffff;
+  box-shadow: 0 18px 28px rgba(15, 23, 42, 0.08);
 }
 
 .option-strike {
@@ -1621,6 +1693,17 @@ a {
   border: 1px solid var(--line);
   border-radius: 16px;
   background: #ffffff;
+  transition:
+    transform 180ms ease,
+    border-color 180ms ease,
+    box-shadow 180ms ease;
+}
+
+.option-card:hover .option-stat,
+.option-card:focus-within .option-stat {
+  transform: translateY(-1px);
+  border-color: rgba(49, 130, 246, 0.12);
+  box-shadow: 0 10px 18px rgba(15, 23, 42, 0.05);
 }
 
 .option-stat-label {
